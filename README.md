@@ -23,7 +23,7 @@ Request:
 
 `GET` `/api/company/my-network`
 
-get company network that a company joined
+get company networks that a company joined
 
 Response:
 
@@ -57,7 +57,7 @@ Request:
 
 `GET` `/api/company-network`
 
-retrieve company network
+retrieve companies inside a company network
 
 Response:
 
