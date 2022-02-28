@@ -13,12 +13,16 @@ import java.util.Set;
  */
 @Node
 public class CompanyNetwork {
-    public String networkId;
-    public String ownerCompanyId;
-    public String name;
-    @Relationship(type = "CONNECTED", direction = Relationship.Direction.INCOMING)
-    public Set<CompanyConnection> connections = new HashSet<>();
     @Id
     @GeneratedValue
-    private Long id;
+    public Long id;
+
+    public String networkId;
+
+    public String ownerCompanyId;
+
+    public String name;
+
+    @Relationship(type = "CONNECTED", direction = Relationship.Direction.INCOMING)
+    public Set<CompanyConnection> companyConnections = new HashSet<>();
 }

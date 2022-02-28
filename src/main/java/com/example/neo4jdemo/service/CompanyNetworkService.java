@@ -29,25 +29,25 @@ public class CompanyNetworkService {
         companyNetwork.name = companyName + " Network";
         companyNetworkRepository.save(companyNetwork);
 
-        var connection = new CompanyConnection();
-        connection.partnerRole = PartnerRole.OWNER;
-        connection.company = company;
-        companyNetwork.connections.add(connection);
+        var companyConnection = new CompanyConnection();
+        companyConnection.partnerRole = PartnerRole.OWNER;
+        companyConnection.company = company;
+        companyNetwork.companyConnections.add(companyConnection);
         companyNetworkRepository.save(companyNetwork);
     }
 
     public void connect(Company company, PartnerRole partnerRole) {
         CompanyNetwork companyNetwork = companyNetworkRepository.findByOwnerCompanyId(CURRENT_COMPANY_ID).orElseThrow(() -> new Error("unknown company network"));
 
-        var connection = new CompanyConnection();
-        connection.partnerRole = partnerRole;
-        connection.company = company;
-        companyNetwork.connections.add(connection);
+        var companyConnection = new CompanyConnection();
+        companyConnection.partnerRole = partnerRole;
+        companyConnection.company = company;
+        companyNetwork.companyConnections.add(companyConnection);
         companyNetworkRepository.save(companyNetwork);
     }
 
     public Set<CompanyConnection> get() {
         CompanyNetwork companyNetwork = companyNetworkRepository.findByOwnerCompanyId(CURRENT_COMPANY_ID).orElseThrow(() -> new Error("unknown company network"));
-        return companyNetwork.connections;
+        return companyNetwork.companyConnections;
     }
 }
