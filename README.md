@@ -2,7 +2,7 @@
 
 a demo project to learn neo4j
 
-# Visualize
+# Visualization
 
 ![company network graph](./images/company-network-graph.png)
 
