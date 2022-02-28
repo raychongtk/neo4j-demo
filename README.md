@@ -21,7 +21,7 @@ Request:
 }
 ```
 
-`POST` `/api/company/connect`
+`POST` `/api/company-network/connect`
 
 connect an existing company to another company network
 
@@ -34,7 +34,7 @@ Request:
 }
 ```
 
-`GET` `/api/company/network`
+`GET` `/api/company-network`
 
 retrieve company network
 
