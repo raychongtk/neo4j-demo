@@ -1,12 +1,21 @@
 package com.example.neo4jdemo.service;
 
+import com.example.neo4jdemo.apipayload.GetJoinedCompanyNetworkResponse;
+import com.example.neo4jdemo.apipayload.PartnerRoleView;
 import com.example.neo4jdemo.domain.Company;
 import com.example.neo4jdemo.domain.CompanyConnection;
 import com.example.neo4jdemo.domain.CompanyNetwork;
 import com.example.neo4jdemo.domain.PartnerRole;
 import com.example.neo4jdemo.repository.CompanyNetworkRepository;
+import com.example.neo4jdemo.util.AuthorizedUser;
+import org.neo4j.driver.internal.value.PathValue;
+import org.neo4j.driver.types.Path;
+import org.neo4j.driver.types.Relationship;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,7 +24,6 @@ import java.util.UUID;
  */
 @Service
 public class CompanyNetworkService {
-    private final static String CURRENT_COMPANY_ID = "8339172a-c2a5-40ec-8c5f-6fe88577a491";
     private final CompanyNetworkRepository companyNetworkRepository;
 
     public CompanyNetworkService(CompanyNetworkRepository companyNetworkRepository) {
@@ -37,7 +45,7 @@ public class CompanyNetworkService {
     }
 
     public void connect(Company company, PartnerRole partnerRole) {
-        CompanyNetwork companyNetwork = companyNetworkRepository.findByOwnerCompanyId(CURRENT_COMPANY_ID).orElseThrow(() -> new Error("unknown company network"));
+        CompanyNetwork companyNetwork = companyNetworkRepository.findByOwnerCompanyId(AuthorizedUser.CURRENT_COMPANY_ID).orElseThrow(() -> new Error("unknown company network"));
 
         var companyConnection = new CompanyConnection();
         companyConnection.partnerRole = partnerRole;
@@ -47,7 +55,27 @@ public class CompanyNetworkService {
     }
 
     public Set<CompanyConnection> get() {
-        CompanyNetwork companyNetwork = companyNetworkRepository.findByOwnerCompanyId(CURRENT_COMPANY_ID).orElseThrow(() -> new Error("unknown company network"));
+        CompanyNetwork companyNetwork = companyNetworkRepository.findByOwnerCompanyId(AuthorizedUser.CURRENT_COMPANY_ID).orElseThrow(() -> new Error("unknown company network"));
         return companyNetwork.companyConnections;
+    }
+
+    public List<GetJoinedCompanyNetworkResponse.Network> getJoinedNetworks(String companyId) {
+        List<PathValue> joinedCompanyNetworks = companyNetworkRepository.getJoinedCompanyNetworks(companyId);
+        List<GetJoinedCompanyNetworkResponse.Network> networks = new ArrayList<>();
+        for (PathValue joinedCompanyNetwork : joinedCompanyNetworks) {
+            Path path = joinedCompanyNetwork.asPath();
+            Map<String, Object> companyNetwork = path.end().asMap();
+            var network = new GetJoinedCompanyNetworkResponse.Network();
+            network.companyNetworkName = String.valueOf(companyNetwork.get("name"));
+            for (Relationship relationship : path.relationships()) {
+                if (relationship.endNodeId() == path.end().id()) {
+                    Map<String, Object> relationshipMap = relationship.asMap();
+                    network.partnerRole = PartnerRoleView.valueOf(String.valueOf(relationshipMap.get("partnerRole")));
+                    break;
+                }
+            }
+            networks.add(network);
+        }
+        return networks;
     }
 }

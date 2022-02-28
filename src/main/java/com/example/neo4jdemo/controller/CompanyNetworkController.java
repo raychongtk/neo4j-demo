@@ -31,7 +31,6 @@ public class CompanyNetworkController {
         this.companyNetworkService = companyNetworkService;
     }
 
-
     @PostMapping("/api/company-network/connect")
     public void connect(@Valid @RequestBody ConnectCompanyRequest request) {
         Company company = companyService.get(request.companyId);

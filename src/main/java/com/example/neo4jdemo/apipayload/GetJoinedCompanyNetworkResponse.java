@@ -9,19 +9,13 @@ import java.util.List;
 /**
  * @author raychong
  */
-public class GetCompanyNetworkResponse {
+public class GetJoinedCompanyNetworkResponse {
     @Valid
-    public List<Company> companies = new ArrayList<>();
+    public List<Network> networks = new ArrayList<>();
 
-    public static class Company {
+    public static class Network {
         @NotBlank
-        public String companyId;
-
-        @NotBlank
-        public String name;
-
-        @NotBlank
-        public String address;
+        public String companyNetworkName;
 
         @NotNull
         public PartnerRoleView partnerRole;

@@ -1,10 +1,9 @@
 package com.example.neo4jdemo.converter;
 
 import com.example.neo4jdemo.apipayload.GetCompanyNetworkResponse;
+import com.example.neo4jdemo.apipayload.PartnerRoleView;
 import com.example.neo4jdemo.domain.Company;
 import com.example.neo4jdemo.domain.CompanyConnection;
-
-import static com.example.neo4jdemo.apipayload.GetCompanyNetworkResponse.PartnerRoleView;
 
 /**
  * @author raychong
