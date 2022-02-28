@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author raychong
  */
-public class GetJoinedCompanyNetworkResponse {
+public class GetMyCompanyNetworkResponse {
     @Valid
     public List<Network> networks = new ArrayList<>();
 

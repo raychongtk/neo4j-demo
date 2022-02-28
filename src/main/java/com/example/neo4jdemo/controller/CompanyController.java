@@ -2,7 +2,7 @@ package com.example.neo4jdemo.controller;
 
 import com.example.neo4jdemo.apipayload.CreateCompanyRequest;
 import com.example.neo4jdemo.apipayload.CreateCompanyResponse;
-import com.example.neo4jdemo.apipayload.GetJoinedCompanyNetworkResponse;
+import com.example.neo4jdemo.apipayload.GetMyCompanyNetworkResponse;
 import com.example.neo4jdemo.domain.Company;
 import com.example.neo4jdemo.service.CompanyService;
 import com.example.neo4jdemo.util.AuthorizedUser;
@@ -39,9 +39,9 @@ public class CompanyController {
 
     @Valid
     @GetMapping("/api/company/my-network")
-    public GetJoinedCompanyNetworkResponse getJoinedNetworks() {
-        var response = new GetJoinedCompanyNetworkResponse();
-        response.networks = companyService.getJoinedNetworks(AuthorizedUser.CURRENT_COMPANY_ID);
+    public GetMyCompanyNetworkResponse getMyCompanyNetworks() {
+        var response = new GetMyCompanyNetworkResponse();
+        response.networks = companyService.getMyCompanyNetworks(AuthorizedUser.CURRENT_COMPANY_ID);
         return response;
     }
 }

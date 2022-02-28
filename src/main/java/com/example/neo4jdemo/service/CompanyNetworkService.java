@@ -1,6 +1,6 @@
 package com.example.neo4jdemo.service;
 
-import com.example.neo4jdemo.apipayload.GetJoinedCompanyNetworkResponse;
+import com.example.neo4jdemo.apipayload.GetMyCompanyNetworkResponse;
 import com.example.neo4jdemo.apipayload.PartnerRoleView;
 import com.example.neo4jdemo.domain.Company;
 import com.example.neo4jdemo.domain.CompanyConnection;
@@ -59,13 +59,13 @@ public class CompanyNetworkService {
         return companyNetwork.companyConnections;
     }
 
-    public List<GetJoinedCompanyNetworkResponse.Network> getJoinedNetworks(String companyId) {
+    public List<GetMyCompanyNetworkResponse.Network> getCompanyNetworkProjection(String companyId) {
         List<PathValue> joinedCompanyNetworks = companyNetworkRepository.getJoinedCompanyNetworks(companyId);
-        List<GetJoinedCompanyNetworkResponse.Network> networks = new ArrayList<>();
+        List<GetMyCompanyNetworkResponse.Network> networks = new ArrayList<>();
         for (PathValue joinedCompanyNetwork : joinedCompanyNetworks) {
             Path path = joinedCompanyNetwork.asPath();
             Map<String, Object> companyNetwork = path.end().asMap();
-            var network = new GetJoinedCompanyNetworkResponse.Network();
+            var network = new GetMyCompanyNetworkResponse.Network();
             network.companyNetworkName = String.valueOf(companyNetwork.get("name"));
             for (Relationship relationship : path.relationships()) {
                 if (relationship.endNodeId() == path.end().id()) {

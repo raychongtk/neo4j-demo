@@ -1,6 +1,6 @@
 package com.example.neo4jdemo.service;
 
-import com.example.neo4jdemo.apipayload.GetJoinedCompanyNetworkResponse;
+import com.example.neo4jdemo.apipayload.GetMyCompanyNetworkResponse;
 import com.example.neo4jdemo.domain.Company;
 import com.example.neo4jdemo.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class CompanyService {
         return companyRepository.findByCompanyId(companyId).orElseThrow(() -> new Error("unknown company"));
     }
 
-    public List<GetJoinedCompanyNetworkResponse.Network> getJoinedNetworks(String companyId) {
-        return companyNetworkService.getJoinedNetworks(companyId);
+    public List<GetMyCompanyNetworkResponse.Network> getMyCompanyNetworks(String companyId) {
+        return companyNetworkService.getCompanyNetworkProjection(companyId);
     }
 }
