@@ -60,13 +60,13 @@ public class CompanyNetworkService {
     }
 
     public List<GetMyCompanyNetworkResponse.Network> getCompanyNetworkProjection(String companyId) {
-        List<PathValue> joinedCompanyNetworks = companyNetworkRepository.getJoinedCompanyNetworks(companyId);
+        List<PathValue> companyNetworkPaths = companyNetworkRepository.getCompanyNetworkPaths(companyId);
         List<GetMyCompanyNetworkResponse.Network> networks = new ArrayList<>();
-        for (PathValue joinedCompanyNetwork : joinedCompanyNetworks) {
-            Path path = joinedCompanyNetwork.asPath();
-            Map<String, Object> companyNetwork = path.end().asMap();
+        for (PathValue companyNetworkPath : companyNetworkPaths) {
+            Path path = companyNetworkPath.asPath();
+            Map<String, Object> companyNetworkMap = path.end().asMap();
             var network = new GetMyCompanyNetworkResponse.Network();
-            network.companyNetworkName = String.valueOf(companyNetwork.get("name"));
+            network.companyNetworkName = String.valueOf(companyNetworkMap.get("name"));
             for (Relationship relationship : path.relationships()) {
                 if (relationship.endNodeId() == path.end().id()) {
                     Map<String, Object> relationshipMap = relationship.asMap();

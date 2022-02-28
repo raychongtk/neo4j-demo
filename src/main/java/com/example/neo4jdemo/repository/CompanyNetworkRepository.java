@@ -17,5 +17,5 @@ public interface CompanyNetworkRepository extends Neo4jRepository<CompanyNetwork
     Optional<CompanyNetwork> findByOwnerCompanyId(String ownerCompanyId);
 
     @Query("MATCH p=(company {companyId: $companyId})-[r:CONNECTED]->() RETURN p")
-    List<PathValue> getJoinedCompanyNetworks(String companyId);
+    List<PathValue> getCompanyNetworkPaths(String companyId);
 }
