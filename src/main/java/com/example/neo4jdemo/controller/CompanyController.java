@@ -38,7 +38,7 @@ public class CompanyController {
     }
 
     @Valid
-    @GetMapping("/api/company/network")
+    @GetMapping("/api/company/my-network")
     public GetJoinedCompanyNetworkResponse getJoinedNetworks() {
         var response = new GetJoinedCompanyNetworkResponse();
         response.networks = companyService.getJoinedNetworks(AuthorizedUser.CURRENT_COMPANY_ID);

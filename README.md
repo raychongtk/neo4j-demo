@@ -21,6 +21,27 @@ Request:
 }
 ```
 
+`GET` `/api/company/my-network`
+
+get joined company network
+
+Response:
+
+```json
+{
+  "networks": [
+    {
+      "companyNetworkName": "Gap Network",
+      "partnerRole": "VIEWER"
+    },
+    {
+      "companyNetworkName": "Nike Network",
+      "partnerRole": "OWNER"
+    }
+  ]
+}
+```
+
 `POST` `/api/company-network/connect`
 
 connect an existing company to another company network
